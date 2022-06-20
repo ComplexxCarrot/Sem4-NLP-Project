@@ -5,12 +5,10 @@ A discord bot to stop spam message using Machine Learning to detect spam or not 
 
 Currently available feature:
 - Delete spam message
-- Sent message that spam successfully deleted or not
+- Set a log channel for all spam logs
+- Send an embedded message instead of normal message
+- Bot will keeps running without stopping
 
 Current problem:
-- need more / stronger dataset
+- unable to timeout member
 
-planned feature:
-- timeout / ban / kick member (still discussing with team members)
-- create log channel
-- Send spam log in log channel
