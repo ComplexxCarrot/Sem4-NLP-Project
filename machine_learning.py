@@ -18,7 +18,6 @@ from sklearn.linear_model import LogisticRegression
 from sqlite3 import Error
 from sklearn.ensemble import RandomForestClassifier
 nltk.download('stopwords')
-%matplotlib inline
 
 # using TF-IDF text classification
 count_vect = CountVectorizer()
