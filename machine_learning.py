@@ -19,31 +19,28 @@ from sqlite3 import Error
 from sklearn.ensemble import RandomForestClassifier
 nltk.download('stopwords')
 
-# using TF-IDF text classification
-count_vect = CountVectorizer()
-
 def run_ML():
-	url = 'https://gist.githubusercontent.com/agtbaskara/a1a7017027cc1df9d35cf06e1e5575b7/raw/59870e27ca217d77ac0d8d8dc100551c0dcd14b3/dataset_sms_spam_v2.csv'
-	dataset = pd.read_csv(url, encoding= 'utf-8')
-	dataset['label'] = dataset['label'].replace(['promo','penipuan'],['spam','spam'])
+	url = 'https://raw.githubusercontent.com/ComplexxCarrot/Sem4-NLP-Project/main/spam-datasets.csv'
+	dataset = pd.read_csv(url, encoding= 'iso-8859-1')
+	
 
 	nltk.download('stopwords')
 	stemmer = PorterStemmer()
-	words = stopwords.words("indonesian")
-	dataset['cleaned'] = dataset['Teks'].apply(lambda x: " ".join([stemmer.stem(i) for i in re.sub("[^a-zA-Z]", " ", x).split() if i not in words]).lower())
+	words = stopwords.words("english")
+	dataset['cleaned'] = dataset['v2'].apply(lambda x: " ".join([stemmer.stem(i) for i in re.sub("[^a-zA-Z]", " ", x).split() if i not in words]).lower())
 
 	vectorizer = TfidfVectorizer(min_df= 3, stop_words="english", sublinear_tf=True, norm='l2', ngram_range=(1, 2))
 	final_features = vectorizer.fit_transform(dataset['cleaned']).toarray()
 
 	X = dataset['cleaned']
-	Y = dataset['label']
+	Y = dataset['v1']
 
 	pipeline = Pipeline([('vect', vectorizer),
                      ('chi',  SelectKBest(chi2, k=1200)),
                      ('clf', LogisticRegression(random_state=0))])
 
-	model = pipeline.fit(X_train, y_train)
+	model = pipeline.fit(X, Y)
 	with open('LogisticRegression.pickle', 'wb') as f:
-    		pickle.dump(model, f)
+		pickle.dump(model, f)
 	
 	return model
