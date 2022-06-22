@@ -7,7 +7,7 @@ from machine_learning import run_ML
 from machine_learning import count_vect
 from keep_alive import keep_alive
 
-clf = run_ML()
+model = run_ML()
 
 intents = discord.Intents().all();
 client = commands.Bot(intents=intents, command_prefix="$");
@@ -45,10 +45,9 @@ async def on_message(message):
 		return
 	
 	inp = [message.content]
-	X_test_tfidf = count_vect.transform(inp)
-	prediction = clf.predict(X_test_tfidf)
+	prediction = model.predict(inp)
 
-	if prediction == ['promo'] or prediction == ['penipuan']:
+	if prediction == ['spam']:
 		output_channel = ''
 		# output_channel = message.channel
 
