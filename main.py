@@ -4,14 +4,12 @@ import datetime
 from discord.ext import commands
 from replit import db
 from machine_learning import run_ML
-from machine_learning import count_vect
 from keep_alive import keep_alive
 
 model = run_ML()
 
 intents = discord.Intents().all();
 client = commands.Bot(intents=intents, command_prefix="$");
-#client.session = aiohttp.ClientSession()
 game = discord.Game(name="Cleaning Spams");
 
 @client.event
@@ -24,16 +22,6 @@ async def setlog(ctx):
 	channel = ctx.channel.id
 	db[id] = channel
 	await ctx.channel.send('setlog successful')
-
-# async def timeout_user(*, user_id: int, guild_id: int, until):
-# 		headers = {"Authorization": f"Bot {client.http.token}"}
-# 		url = f"https://discord.com/api/v9/guilds/{guild_id}/members/{user_id}"
-# 		timeout = (datetime.datetime.utcnow() + datetime.timedelta(minutes=until)).isoformat()
-# 		json = {'communication_disabled_until': timeout}
-# 		async with client.session.patch(url, json=json, headers=headers) as session:
-# 			if session.status in range(200, 299):
-# 				return True
-# 			return False
 
 @client.event
 async def on_message(message):
@@ -67,7 +55,7 @@ async def on_message(message):
 		except:
 			delete_status = False
 
-		embed=discord.Embed()
+		embed=discord.Embed(color=0xff0000)
 		embed.timestamp = datetime.datetime.utcnow()
 		if delete_status == False:
 			embed.add_field(
@@ -80,12 +68,6 @@ async def on_message(message):
 		embed.add_field(name="Reason", value="Spam message", inline=False)
     
 		await output_channel.send(embed=embed)
-
-  #   handshake = await timeout_user(user_id=ctx.author.id, guild_id=ctx.guild.id, until=until)
-		# if handshake:
-		# 	return await ctx.send(f"Successfully timed out user for {until} minutes.")
-		# else:
-		# 	await ctx.channel.send(f"failed to timeout <@{ctx.author.id}>")
 
 keep_alive()
 client.run(os.environ['TOKEN'])
