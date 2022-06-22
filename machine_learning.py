@@ -38,7 +38,6 @@ def run_ML():
 
 	X = dataset['cleaned']
 	Y = dataset['label']
-	X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.25)
 
 	pipeline = Pipeline([('vect', vectorizer),
                      ('chi',  SelectKBest(chi2, k=1200)),
