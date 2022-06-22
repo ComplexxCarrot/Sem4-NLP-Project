@@ -29,7 +29,7 @@ def run_ML():
 
 	nltk.download('stopwords')
 	stemmer = PorterStemmer()
-	words = stopwords.words("english")
+	words = stopwords.words("indonesian")
 	dataset['cleaned'] = dataset['Teks'].apply(lambda x: " ".join([stemmer.stem(i) for i in re.sub("[^a-zA-Z]", " ", x).split() if i not in words]).lower())
 
 	vectorizer = TfidfVectorizer(min_df= 3, stop_words="english", sublinear_tf=True, norm='l2', ngram_range=(1, 2))
