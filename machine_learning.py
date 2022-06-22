@@ -4,8 +4,6 @@ import pandas as pd
 
 # machine learning stuff
 import re
-import sqlite3
-import pickle
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -15,8 +13,6 @@ from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectKBest, chi2
 from sklearn.linear_model import LogisticRegression
-from sqlite3 import Error
-from sklearn.ensemble import RandomForestClassifier
 nltk.download('stopwords')
 
 def run_ML():
@@ -40,7 +36,5 @@ def run_ML():
                      ('clf', LogisticRegression(random_state=0))])
 
 	model = pipeline.fit(X, Y)
-	with open('LogisticRegression.pickle', 'wb') as f:
-		pickle.dump(model, f)
 	
 	return model
