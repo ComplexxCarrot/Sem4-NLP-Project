@@ -9,6 +9,3 @@ Currently available feature:
 - Send an embedded message instead of normal message
 - Bot will keeps running without stopping
 
-Current problem:
-- unable to timeout member
-
